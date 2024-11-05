@@ -1,5 +1,4 @@
 import React from "react";
-
 function Links({ github, linkedin }) {
   return (
     <div>
@@ -9,5 +8,4 @@ function Links({ github, linkedin }) {
     </div>
   );
 }
-
 export default Links;

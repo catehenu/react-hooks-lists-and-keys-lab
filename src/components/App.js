@@ -3,8 +3,7 @@ import NavBar from "./NavBar";
 import Home from "./Home";
 import About from "./About";
 import ProjectList from "./ProjectList";
-import user from "../data/user";
-
+import user from "../data/data";
 function App() {
   return (
     <div>
@@ -15,5 +14,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

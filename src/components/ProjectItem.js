@@ -1,5 +1,4 @@
 import React from "react";
-
 function ProjectItem({ name, about, technologies }) {
   return (
     <div className="project-item">
@@ -11,5 +10,4 @@ function ProjectItem({ name, about, technologies }) {
     </div>
   );
 }
-
 export default ProjectItem;

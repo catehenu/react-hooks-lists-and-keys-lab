@@ -1,6 +1,5 @@
 import React from "react";
 import ProjectItem from "./ProjectItem";
-
 function ProjectList({ projects }) {
   console.log(projects);
   return (
@@ -10,5 +9,4 @@ function ProjectList({ projects }) {
     </div>
   );
 }
-
 export default ProjectList;
