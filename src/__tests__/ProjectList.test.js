@@ -1,21 +1,41 @@
-import Enzyme, { shallow } from "enzyme";
-import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
-import ProjectItem from "../components/ProjectItem";
-import user from "../data/data";
-Enzyme.configure({ adapter: new Adapter() });
-let wrapper;
-const { name, about, technologies } = user.projects[1];
-beforeEach(() => {
-  wrapper = shallow(
-    <ProjectItem name={name} about={about} technologies={technologies} />
-  );
+import "@testing-library/jest-dom";
+import { render, screen } from "@testing-library/react";
+import ProjectList from "../components/ProjectList";
+
+const projects = [
+  {
+    id: 1,
+    name: "Reciplease",
+    about: "A recipe tracking app",
+    technologies: ["Rails", "Bootstrap CSS"],
+  },
+  {
+    id: 2,
+    name: "Kibbles N Bitz",
+    about: "Tinder for dogs",
+    technologies: ["React", "Redux"],
+  },
+  {
+    id: 3,
+    name: "Alienwares",
+    about: "Etsy for aliens",
+    technologies: ["React", "Redux", "Rails"],
+  },
+];
+
+test("gives each <ProjectItem> a key based on the project id", () => {
+  let errorSpy = jest.spyOn(global.console, "error");
+  render(<ProjectList projects={projects} />);
+
+  expect(errorSpy).not.toHaveBeenCalled();
+
+  errorSpy.mockRestore();
 });
-test("renders a <span> for each technology passed in as a prop", () => {
-  expect(wrapper.find("span")).toHaveLength(technologies.length);
-});
-test("gives each <span> a key based on the technology name", () => {
-  const items = wrapper.find("span");
-  expect(items.at(0).key()).toEqual(technologies[0]);
-  expect(items.at(1).key()).toEqual(technologies[1]);
-  expect(items.at(2).key()).toEqual(technologies[2]);
+
+test("renders a <ProjectItem> for each project passed in as a prop", () => {
+  render(<ProjectList projects={projects} />);
+
+  for (const project of projects) {
+    expect(screen.queryByText(project.name)).toBeInTheDocument();
+  }
 });

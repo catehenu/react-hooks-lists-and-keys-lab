@@ -1,5 +1,6 @@
 import React from "react";
 import Links from "./Links";
+
 function About({ bio, links }) {
   return (
     <div id="about">
@@ -10,4 +11,5 @@ function About({ bio, links }) {
     </div>
   );
 }
+
 export default About;

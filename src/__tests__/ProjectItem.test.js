@@ -1,18 +1,40 @@
-import Enzyme, { shallow } from "enzyme";
-import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
+import "@testing-library/jest-dom";
+import { render, screen } from "@testing-library/react";
 import ProjectItem from "../components/ProjectItem";
-import user from "../data/data";
-Enzyme.configure({ adapter: new Adapter() });
-let wrapper;
-beforeEach(() => {
-  wrapper = shallow(<ProjectItem projects={user.projects} />);
+
+const project = {
+  id: 1,
+  name: "Reciplease",
+  about: "A recipe tracking app",
+  technologies: ["Rails", "Bootstrap CSS"],
+};
+
+test("each <span> element has a unique key prop", () => {
+  let errorSpy = jest.spyOn(global.console, "error");
+  render(
+    <ProjectItem
+      name={project.name}
+      about={project.about}
+      technologies={project.technologies}
+    />
+  );
+
+  expect(errorSpy).not.toHaveBeenCalled();
+
+  errorSpy.mockRestore();
 });
-test("renders a <ProjectItem> for each project passed in as a prop", () => {
-  expect(wrapper.find(ProjectItem)).toHaveLength(user.projects.length);
-});
-test("gives each <ProjectItem> a key based on the project id", () => {
-  const items = wrapper.find(ProjectItem);
-  expect(items.at(0).key()).toEqual(user.projects[0].id);
-  expect(items.at(1).key()).toEqual(user.projects[1].id);
-  expect(items.at(2).key()).toEqual(user.projects[2].id);
+
+test("renders a <span> for each technology passed in as a prop", () => {
+  render(
+    <ProjectItem
+      name={project.name}
+      about={project.about}
+      technologies={project.technologies}
+    />
+  );
+  for (const technology of project.technologies) {
+    const span = screen.queryByText(technology);
+    expect(span).toBeInTheDocument();
+    expect(span.tagName).toBe("SPAN");
+  }
 });
